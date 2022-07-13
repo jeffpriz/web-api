@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using simple_math_nuget;
+//using simple_math_nuget;
 using simpleweb.model;
 namespace simpleweb.Controllers
 {
@@ -19,7 +19,7 @@ namespace simpleweb.Controllers
         {
             System.Diagnostics.Stopwatch durationTimer = new System.Diagnostics.Stopwatch();
             durationTimer.Start();
-            MathValue result = new MathValue(x, y, simpleMath.Add(x, y));
+            MathValue result = new MathValue(x, y, (x+y));
             durationTimer.Stop();
             result.Duration = new TimeSpan(durationTimer.ElapsedTicks);
             
@@ -39,7 +39,7 @@ namespace simpleweb.Controllers
             bool ysuccess = int.TryParse(vals[1], System.Globalization.NumberStyles.Integer, System.Globalization.NumberFormatInfo.CurrentInfo, out y);
             if (xsuccess && ysuccess)
             {
-                result = new MathValue(x, y, simpleMath.Add(x, y));
+                result = new MathValue(x,y, x +y);
             }
             else
             {

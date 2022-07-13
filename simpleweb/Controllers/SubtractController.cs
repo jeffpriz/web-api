@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using simpleweb.model;
-using simple_math_nuget;
+
 
 namespace simpleweb.Controllers
 {
@@ -17,7 +17,7 @@ namespace simpleweb.Controllers
         [HttpGet("{x}/{y}", Name = "GetSubtract")]
         public IMathResult Get(int x, int y)
         {
-            MathValue result = new MathValue(x, y, simpleMath.Subtract(x, y));
+            MathValue result = new MathValue(x, y, (x-y));
             return result;
         }
 
@@ -34,7 +34,7 @@ namespace simpleweb.Controllers
             bool ysuccess = int.TryParse(vals[1], System.Globalization.NumberStyles.Integer, System.Globalization.NumberFormatInfo.CurrentInfo, out y);
             if (xsuccess && ysuccess)
             {
-                result = new MathValue(x, y, simpleMath.Subtract(x, y));
+                result = new MathValue(x, y, (x-y));
             }
             else
             {

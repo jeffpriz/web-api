@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using simpleweb.model;
-using simple_math_nuget;
+
 
 namespace simpleweb.Controllers
 {
@@ -20,7 +20,7 @@ namespace simpleweb.Controllers
             MathValue result;
             if (y != 0)
             {
-                result = new MathValue(x, y, simpleMath.Divide(x, y));
+                result = new MathValue(x, y, (x/y));
             }
             else
             {
@@ -44,7 +44,7 @@ namespace simpleweb.Controllers
             {
                 if (y != 0)
                 {
-                    result = new MathValue(x, y, simpleMath.Divide(x, y));
+                    result = new MathValue(x, y, (x/y));
                 }
                 else
                 {
