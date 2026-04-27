@@ -57,7 +57,7 @@ steps:
     action: 'create'
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
-    tag: '3.0.1.$(BuildVersionNumber)'
+    tag: '3.0.1-$(BuildVersionNumber)'
     assets: 
     isPreRelease: true
     makeLatest: 'false'
@@ -69,7 +69,7 @@ steps:
     command: 'publish'
     feed: 'MyHealthHier/BuildArtifacts'
     packageName: 'web-api'
-    packageVersion: '3.0.1.$(BuildVersionNumber)'
+    packageVersion: '3.0.1-$(BuildVersionNumber)'
     directory: '$(Build.ArtifactStagingDirectory)/publish'
     packageDescription: 'Web API Build'
 
