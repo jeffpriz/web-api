@@ -26,8 +26,8 @@ steps:
 - powershell: |
     $utcNow = (Get-Date).ToUniversalTime()
     $year = $utcNow.ToString('yy')
-    $dayOfYear = $utcNow.DayOfYear.ToString('000')
-    $secondsOfDay = [int][Math]::Floor($utcNow.TimeOfDay.TotalSeconds)
+    $dayOfYear = $utcNow.DayOfYear.ToString('D3')
+    $secondsOfDay = [int]$utcNow.TimeOfDay.TotalSeconds
     $buildNumber = "{0}{1}{2}" -f $year, $dayOfYear, $secondsOfDay.ToString('00000')
     Write-Host "##vso[task.setvariable variable=BuildVersionNumber]$buildNumber"
   displayName: 'Calculate build version number'
