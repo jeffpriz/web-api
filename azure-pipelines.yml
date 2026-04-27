@@ -10,8 +10,18 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: DotNetCoreCLI@2
+  displayName: 'Restore solution'
+  inputs:
+    command: 'restore'
+    projects: 'simpleweb.sln'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build solution'
+  inputs:
+    command: 'build'
+    projects: 'simpleweb.sln'
+    arguments: '--configuration Release'
 
 - script: |
     year=$(date -u +%y)
@@ -24,10 +34,21 @@ steps:
     echo "##vso[task.setvariable variable=BuildVersionNumber]$build_number"
   displayName: 'Calculate build version number'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: DotNetCoreCLI@2
+  displayName: 'Publish project output'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: 'simpleweb/simpleweb.csproj'
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/publish'
+    zipAfterPublish: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish build artifact'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
 
 - task: GitHubRelease@1
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
