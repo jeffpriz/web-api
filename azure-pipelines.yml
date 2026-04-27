@@ -14,6 +14,17 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
+    year=$(date -u +%y)
+    day_of_year=$(date -u +%j)
+    hours=$(date -u +%H)
+    minutes=$(date -u +%M)
+    seconds=$(date -u +%S)
+    seconds_of_day=$((10#$hours * 3600 + 10#$minutes * 60 + 10#$seconds))
+    build_number="${year}${day_of_year}$(printf '%05d' "$seconds_of_day")"
+    echo "##vso[task.setvariable variable=BuildVersionNumber]$build_number"
+  displayName: 'Calculate build version number'
+
+- script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
@@ -25,7 +36,7 @@ steps:
     action: 'create'
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
-    tag: '3.0.1.2611462302'
+    tag: '3.0.1.$(BuildVersionNumber)'
     assets: 
     isPreRelease: true
     makeLatest: 'false'
