@@ -20,6 +20,7 @@ steps:
 
 - task: GitHubRelease@1
   inputs:
+    gitHubConnection: 'MyHealthHier'
     repositoryName: '$(Build.Repository.Name)'
     action: 'create'
     target: '$(Build.SourceVersion)'
