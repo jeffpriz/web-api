@@ -69,7 +69,7 @@ steps:
     command: 'publish'
     feed: 'MyHealthHier/BuildArtifacts'
     packageName: 'web-api'
-    packageVersion: '3.0.1.$(BuildVersionNumber)'
+    packageVersion: '3.0.$(BuildVersionNumber)'
     directory: '$(Build.ArtifactStagingDirectory)/publish'
     packageDescription: 'Web API Build'
 
