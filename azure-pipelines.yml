@@ -17,3 +17,16 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
+- task: GitHubRelease@1
+  inputs:
+    repositoryName: '$(Build.Repository.Name)'
+    action: 'create'
+    target: '$(Build.SourceVersion)'
+    tagSource: 'userSpecifiedTag'
+    tag: '3.0.1.2611462302'
+    assets: 
+    isPreRelease: true
+    makeLatest: 'false'
+    changeLogCompareToRelease: 'lastFullRelease'
+    changeLogType: 'commitBased'
