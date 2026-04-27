@@ -64,10 +64,11 @@ steps:
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
 
-- task: AzureCLI@3
+- task: UniversalPackages@1
   inputs:
-    connectionType: 'azureRM'
-    azureSubscription: 'jeff3cloud-azure'
-    scriptType: 'ps'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az artifacts universal publish --organization https://dev.azure.com/3cloudjeffpriz --project MyHealthHier --scope project --feed Universal --name web-api --version 3.0.1.$(BuildVersionNumber) --path $(Build.ArtifactStagingDirectory)/publish/publish.zip --description ''WebAPI build'''
+    command: 'publish'
+    feed: 'Universal'
+    packageName: 'web-api'
+    packageVersion: '3.0.1.$(BuildVersionNumber)'
+    directory: '$(Build.ArtifactStagingDirectory)/publish'
+    packageDescription: 'Web API Build'
