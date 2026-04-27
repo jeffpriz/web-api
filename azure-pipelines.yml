@@ -67,7 +67,7 @@ steps:
 - task: UniversalPackages@1
   inputs:
     command: 'publish'
-    feed: 'Universal'
+    feed: 'BuildArtifacts'
     packageName: 'web-api'
     packageVersion: '3.0.1.$(BuildVersionNumber)'
     directory: '$(Build.ArtifactStagingDirectory)/publish'
