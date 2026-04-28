@@ -24,7 +24,7 @@ steps:
     $secondsOfDay = [int]$utcNow.TimeOfDay.TotalSeconds
     $buildNumber = "{0}{1}" -f $dayOfYear, $secondsOfDay.ToString('00000')
     Write-Host "##vso[task.setvariable variable=BuildVersionNumber]$buildNumber"
-    Write-Host "##vso[task.setvariable variable=SemVer]3.0.1-$buildNumber"
+    Write-Host "##vso[task.setvariable variable=SemVer]3.0.1+$buildNumber"
   displayName: 'Calculate build version number'
 
 - task: DotNetCoreCLI@2
@@ -32,9 +32,8 @@ steps:
   inputs:
     command: 'build'
     projects: 'simpleweb.sln'
-    arguments: '--configuration Release'
-    versioningScheme: byEnvVar
-    versionEnvVar: SemVer
+    arguments: '--configuration Release -p Version=$(SemVer)'
+
     
 
 
