@@ -30,6 +30,7 @@ steps:
     $secondsOfDay = [int]$utcNow.TimeOfDay.TotalSeconds
     $buildNumber = "{0}{1}" -f $dayOfYear, $secondsOfDay.ToString('00000')
     Write-Host "##vso[task.setvariable variable=BuildVersionNumber]$buildNumber"
+    Write-Host "##vso[task.setvariable variable=SemVer]3.0.1-$buildNumber"
   displayName: 'Calculate build version number'
 
 - task: DotNetCoreCLI@2
@@ -41,6 +42,8 @@ steps:
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/publish'
     zipAfterPublish: true
     modifyOutputPath: false
+    versioningScheme: byEnvVar
+    versionEnvVar: SemVer
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish build artifact'
@@ -57,7 +60,7 @@ steps:
     action: 'create'
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
-    tag: '3.0.1-$(BuildVersionNumber)'
+    tag: '$(SemVer)'
     assets: 
     isPreRelease: true
     makeLatest: 'false'
@@ -69,7 +72,7 @@ steps:
     command: 'publish'
     feed: 'MyHealthHier/BuildArtifacts'
     packageName: 'web-api'
-    packageVersion: '3.0.1-$(BuildVersionNumber)'
+    packageVersion: '$(SemVer)'
     directory: '$(Build.ArtifactStagingDirectory)/publish'
     packageDescription: 'Web API Build'
 
