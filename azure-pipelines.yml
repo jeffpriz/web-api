@@ -44,7 +44,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: './simpleweb/simpleweb.csproj'
-    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/publish'
+    arguments: '--configuration Release -p Version=$(SemVer) --output $(Build.ArtifactStagingDirectory)/publish'
     zipAfterPublish: true
     modifyOutputPath: false
 
